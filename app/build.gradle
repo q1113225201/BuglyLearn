@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply from: 'tinker-support.gradle'
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.sjl.buglylearn"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        config {
+            storeFile file('buglylearn.jks')
+            storePassword 'buglylearn'
+            keyAlias 'buglylearn'
+            keyPassword 'buglylearn'
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.android.support:support-v4:28.0.0'
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+// 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
+    api 'com.tencent.tinker:tinker-android-lib:1.9.9'
+    api 'com.android.support:multidex:1.0.3'
+    //bug捕获
+//    api 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+//    api 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    //升级和bug捕获
+    api 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_bug"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="制造bug" />
+
+    <EditText
+        android:id="@+id/et_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="账号"
+        android:inputType="phone"
+        android:text="123" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置UserId" />
+    <Button
+        android:id="@+id/btn_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="检测更新" />
+    <Button
+        android:id="@+id/btn_hotfix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="热修复" />
+    <Button
+        android:id="@+id/btn_apply_hotfix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加载补丁" />
+</LinearLayout>
