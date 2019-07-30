@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("修复后：").append("\n");
+        stringBuilder.append("二次修复：").append("\n");
         stringBuilder.append("versionCode:").append(BuildConfig.VERSION_CODE);
         stringBuilder.append("\n");
         stringBuilder.append("versionName:").append(BuildConfig.VERSION_NAME);
