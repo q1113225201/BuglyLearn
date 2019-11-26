@@ -1,10 +1,12 @@
 package com.sjl.buglylearn;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,41 +31,64 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         tv = findViewById(R.id.tv);
         etNum = findViewById(R.id.et_num);
-        findViewById(R.id.btn_bug).setOnClickListener(v -> {
-//            bugMethod();
-            trueMethod();
+        findViewById(R.id.btn_bug).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //            bugMethod();
+                trueMethod();
+            }
         });
-        findViewById(R.id.btn_login).setOnClickListener(v -> {
-            CrashReport.setUserId(etNum.getText().toString());
+        findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrashReport.setUserId(etNum.getText().toString());
+            }
         });
-        findViewById(R.id.btn_hotfix).setOnClickListener(v -> {
-            Beta.downloadPatch();
+        findViewById(R.id.btn_hotfix).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Beta.downloadPatch();
+            }
         });
-        findViewById(R.id.btn_apply_hotfix).setOnClickListener(v -> {
-            Beta.applyDownloadedPatch();
+        findViewById(R.id.btn_apply_hotfix).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Beta.applyDownloadedPatch();
+            }
         });
-        findViewById(R.id.btn_check).setOnClickListener(v -> {
-            UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-            if (upgradeInfo != null) {
-                new AlertDialog.Builder(this)
-                        .setTitle(upgradeInfo.title)
-                        .setMessage(upgradeInfo.newFeature)
-                        .setNegativeButton("下载", (dialog, which) -> {
-                            dialog.dismiss();
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(upgradeInfo.apkUrl));
-                            startActivity(intent);
-                        })
-                        .setPositiveButton("取消", (dialog, which) -> dialog.dismiss())
-                        .create().show();
-            } else {
-                Beta.checkUpgrade(false, true);
+        findViewById(R.id.btn_check).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+                if (upgradeInfo != null) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle(upgradeInfo.title)
+                            .setMessage(upgradeInfo.newFeature)
+                            .setNegativeButton("下载", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse(upgradeInfo.apkUrl));
+                                    startActivity(intent);
+                                }
+                            })
+                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create().show();
+                } else {
+                    Beta.checkUpgrade(false, true);
+                }
             }
         });
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("修复后：").append("\n");
-        stringBuilder.append("二次修复：").append("\n");
+        stringBuilder.append("签名修复：").append("\n");
         stringBuilder.append("versionCode:").append(BuildConfig.VERSION_CODE);
         stringBuilder.append("\n");
         stringBuilder.append("versionName:").append(BuildConfig.VERSION_NAME);
